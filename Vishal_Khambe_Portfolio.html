@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vishal Khambe | Security Operations Professional</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --black: #080c10;
+  --deep: #0d1117;
+  --panel: #111820;
+  --border: #1e2d3d;
+  --steel: #1a3a5c;
+  --blue: #0f4c81;
+  --accent: #00a8e8;
+  --gold: #c8960c;
+  --gold-light: #f0b429;
+  --white: #f0f4f8;
+  --muted: #6b8299;
+  --text: #c8d8e8;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--black);
+  color: var(--text);
+  font-family: 'Crimson Pro', serif;
+  font-size: 18px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ── NOISE OVERLAY ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 60px;
+  background: rgba(8,12,16,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  letter-spacing: 3px;
+  color: var(--accent);
+}
+
+.nav-links {
+  display: flex;
+  gap: 36px;
+  list-style: none;
+}
+
+.nav-links a {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover { color: var(--accent); }
+
+/* ── HERO ── */
+#hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 120px 60px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-grid-bg {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0,168,232,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,168,232,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+}
+
+.hero-glow {
+  position: absolute;
+  top: -200px; right: -200px;
+  width: 700px; height: 700px;
+  background: radial-gradient(circle, rgba(0,168,232,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-glow-2 {
+  position: absolute;
+  bottom: -100px; left: -100px;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(200,150,12,0.05) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+}
+
+.hero-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 4px;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.2s ease forwards;
+}
+
+.hero-tag::before {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 1px;
+  background: var(--accent);
+}
+
+h1.hero-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(72px, 10vw, 130px);
+  line-height: 0.9;
+  color: var(--white);
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.4s ease forwards;
+}
+
+h1.hero-name span { color: var(--accent); }
+
+.hero-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(24px, 3.5vw, 42px);
+  color: var(--gold-light);
+  letter-spacing: 4px;
+  margin-bottom: 32px;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.5s ease forwards;
+}
+
+.hero-summary {
+  font-size: 19px;
+  font-weight: 300;
+  color: var(--text);
+  max-width: 680px;
+  line-height: 1.8;
+  margin-bottom: 48px;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.6s ease forwards;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 48px;
+  margin-bottom: 48px;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.7s ease forwards;
+}
+
+.stat {
+  text-align: center;
+}
+
+.stat-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 52px;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.stat-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.hero-contact {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.8s ease forwards;
+}
+
+.contact-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--text);
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.contact-pill:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(0,168,232,0.06);
+}
+
+.contact-pill .icon { font-size: 14px; }
+
+/* ── SECTIONS ── */
+section {
+  padding: 100px 60px;
+  position: relative;
+  z-index: 1;
+}
+
+.section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 4px;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.section-label::before {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(42px, 5vw, 68px);
+  color: var(--white);
+  letter-spacing: 2px;
+  line-height: 1;
+  margin-bottom: 60px;
+}
+
+/* ── ABOUT ── */
+#about { background: var(--deep); border-top: 1px solid var(--border); }
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+
+.about-text p {
+  font-size: 19px;
+  font-weight: 300;
+  line-height: 1.9;
+  color: var(--text);
+  margin-bottom: 24px;
+}
+
+.about-text p strong {
+  color: var(--white);
+  font-weight: 600;
+}
+
+.credentials-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.cred-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 20px;
+  transition: border-color 0.3s;
+}
+
+.cred-card:hover { border-color: var(--accent); }
+
+.cred-icon {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+.cred-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.cred-value {
+  font-size: 15px;
+  color: var(--white);
+  font-weight: 600;
+}
+
+.cred-sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 3px;
+}
+
+/* ── EXPERIENCE ── */
+#experience { background: var(--black); border-top: 1px solid var(--border); }
+
+.timeline {
+  position: relative;
+  max-width: 960px;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0; bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--accent), var(--border), transparent);
+}
+
+.timeline-item {
+  position: relative;
+  padding-left: 48px;
+  margin-bottom: 72px;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: -6px;
+  top: 6px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--black);
+  box-shadow: 0 0 12px rgba(0,168,232,0.5);
+}
+
+.timeline-dot.gold {
+  background: var(--gold-light);
+  box-shadow: 0 0 12px rgba(240,180,41,0.5);
+}
+
+.timeline-company {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 30px;
+  color: var(--accent);
+  letter-spacing: 2px;
+  margin-bottom: 4px;
+}
+
+.timeline-company.gold-co { color: var(--gold-light); }
+
+.timeline-role {
+  font-family: 'Crimson Pro', serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+
+.timeline-period {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+}
+
+.timeline-duties {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.timeline-duties li {
+  display: flex;
+  gap: 14px;
+  font-size: 17px;
+  font-weight: 300;
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.timeline-duties li::before {
+  content: '▸';
+  color: var(--accent);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.timeline-duties.gold-bullets li::before { color: var(--gold-light); }
+
+.role-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 28px 0;
+}
+
+.sub-role {
+  margin-bottom: 0;
+}
+
+/* ── SKILLS ── */
+#skills { background: var(--deep); border-top: 1px solid var(--border); }
+
+.skills-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 32px;
+}
+
+.skill-category {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 32px;
+  transition: border-color 0.3s, transform 0.3s;
+}
+
+.skill-category:hover {
+  border-color: var(--accent);
+  transform: translateY(-4px);
+}
+
+.skill-cat-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.skill-tag {
+  display: inline-block;
+  background: rgba(0,168,232,0.08);
+  border: 1px solid rgba(0,168,232,0.2);
+  color: var(--text);
+  font-size: 14px;
+  padding: 5px 12px;
+  border-radius: 3px;
+  margin: 4px 4px 4px 0;
+  font-family: 'Crimson Pro', serif;
+  transition: all 0.2s;
+}
+
+.skill-tag:hover {
+  background: rgba(0,168,232,0.15);
+  color: var(--white);
+}
+
+.skill-tag.gold-tag {
+  background: rgba(200,150,12,0.08);
+  border-color: rgba(200,150,12,0.2);
+}
+
+.skill-tag.gold-tag:hover {
+  background: rgba(200,150,12,0.15);
+}
+
+/* ── CERTIFICATIONS ── */
+#certifications { background: var(--black); border-top: 1px solid var(--border); }
+
+.certs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+.cert-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 28px 32px;
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  transition: border-color 0.3s, transform 0.3s;
+}
+
+.cert-card:hover {
+  border-color: var(--gold-light);
+  transform: translateY(-3px);
+}
+
+.cert-badge {
+  width: 44px;
+  height: 44px;
+  background: rgba(240,180,41,0.1);
+  border: 1px solid rgba(240,180,41,0.3);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.cert-name {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--white);
+  line-height: 1.3;
+  margin-bottom: 6px;
+}
+
+.cert-issuer {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 1px;
+}
+
+.cert-year {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--gold-light);
+  margin-top: 4px;
+}
+
+/* ── DOCUMENTS ── */
+#documents { background: var(--deep); border-top: 1px solid var(--border); }
+
+.docs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  max-width: 900px;
+}
+
+.doc-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 32px;
+  transition: all 0.3s;
+}
+
+.doc-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+}
+
+.doc-icon { font-size: 36px; margin-bottom: 16px; }
+
+.doc-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  letter-spacing: 2px;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+
+.doc-id {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 4px;
+  letter-spacing: 1px;
+}
+
+.doc-valid {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: #4ade80;
+}
+
+/* ── LANGUAGES ── */
+.lang-grid {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-top: 48px;
+}
+
+.lang-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 24px 32px;
+  text-align: center;
+  min-width: 160px;
+  transition: border-color 0.3s;
+}
+
+.lang-card:hover { border-color: var(--accent); }
+
+.lang-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 24px;
+  letter-spacing: 2px;
+  color: var(--white);
+  margin-bottom: 6px;
+}
+
+.lang-level {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.lang-bar {
+  height: 3px;
+  background: var(--border);
+  border-radius: 2px;
+  margin-top: 10px;
+  overflow: hidden;
+}
+
+.lang-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--gold-light));
+  border-radius: 2px;
+}
+
+/* ── COVER LETTER ── */
+#cover { background: var(--black); border-top: 1px solid var(--border); }
+
+.letter-card {
+  max-width: 760px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 56px 64px;
+  position: relative;
+}
+
+.letter-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--gold-light));
+  border-radius: 12px 12px 0 0;
+}
+
+.letter-greeting {
+  font-size: 18px;
+  color: var(--muted);
+  font-style: italic;
+  margin-bottom: 28px;
+}
+
+.letter-body p {
+  font-size: 18px;
+  font-weight: 300;
+  color: var(--text);
+  line-height: 1.9;
+  margin-bottom: 22px;
+}
+
+.letter-body p strong { color: var(--white); font-weight: 600; }
+
+.letter-sign {
+  margin-top: 36px;
+  padding-top: 28px;
+  border-top: 1px solid var(--border);
+}
+
+.letter-sign-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 32px;
+  letter-spacing: 3px;
+  color: var(--white);
+}
+
+.letter-sign-contact {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 8px;
+}
+
+/* ── EDUCATION ── */
+#education { background: var(--deep); border-top: 1px solid var(--border); }
+
+.edu-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 36px 40px;
+  max-width: 640px;
+  display: flex;
+  gap: 28px;
+  align-items: flex-start;
+  transition: border-color 0.3s;
+}
+
+.edu-card:hover { border-color: var(--gold-light); }
+
+.edu-icon {
+  font-size: 40px;
+  flex-shrink: 0;
+}
+
+.edu-degree {
+  font-size: 21px;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 6px;
+}
+
+.edu-institute {
+  font-size: 17px;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+
+.edu-period {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 1px;
+}
+
+/* ── FOOTER ── */
+footer {
+  background: var(--deep);
+  border-top: 1px solid var(--border);
+  padding: 48px 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px;
+  letter-spacing: 4px;
+  color: var(--white);
+}
+
+.footer-tagline {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 2px;
+  margin-top: 4px;
+}
+
+.footer-right {
+  text-align: right;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(32px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  nav { padding: 16px 24px; }
+  section { padding: 70px 24px; }
+  #hero { padding: 100px 24px 60px; }
+  .about-grid { grid-template-columns: 1fr; gap: 48px; }
+  .skills-layout { grid-template-columns: 1fr 1fr; }
+  .hero-stats { gap: 28px; }
+  footer { flex-direction: column; gap: 20px; text-align: center; }
+  .footer-right { text-align: center; }
+  .letter-card { padding: 36px 28px; }
+  .nav-links { display: none; }
+}
+
+@media (max-width: 600px) {
+  .skills-layout { grid-template-columns: 1fr; }
+  .credentials-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">VK</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#certifications">Certifications</a></li>
+    <li><a href="#documents">Documents</a></li>
+    <li><a href="#cover">Cover Letter</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow-2"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Security Operations Professional</div>
+    <h1 class="hero-name">VISHAL<br><span>KHAMBE</span></h1>
+    <div class="hero-title">Maritime & Aviation Security Expert</div>
+    <p class="hero-summary">
+      14 years of specialized security excellence spanning <strong>Royal Caribbean International</strong> and <strong>Jet Airways</strong> — delivering compliance-driven, high-stakes protection across maritime vessels and aviation operations in multinational environments.
+    </p>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">14</div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">40</div>
+        <div class="stat-label">Max Team Size</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">8500</div>
+        <div class="stat-label">Max Vessel Capacity</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">6+</div>
+        <div class="stat-label">Airlines Supported</div>
+      </div>
+    </div>
+    <div class="hero-contact">
+      <a href="tel:+919869390840" class="contact-pill">
+        <span class="icon">📱</span> +91 98693 90840
+      </a>
+      <a href="mailto:vincy0808@gmail.com" class="contact-pill">
+        <span class="icon">✉️</span> vincy0808@gmail.com
+      </a>
+      <div class="contact-pill">
+        <span class="icon">📍</span> Mumbai, India
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">Professional Profile</div>
+  <div class="section-title">ABOUT ME</div>
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p>
+        A results-oriented <strong>Security Operations professional</strong> with over 14 years of expertise across the maritime and aviation sectors. My career spans two of the industry's most demanding environments — luxury cruise ships and commercial aviation — giving me a uniquely comprehensive view of security in complex, high-volume, regulated settings.
+      </p>
+      <p>
+        At <strong>Royal Caribbean International</strong>, I rose from Security Staff to <strong>Security Supervisor</strong>, overseeing teams of up to 40 personnel and managing security operations for vessels carrying up to 8,500 passengers and crew. My responsibilities encompassed gangway screening, access control, ISPS and CVSSA compliance, incident investigation, crisis preparedness, and stakeholder coordination with port authorities and local law enforcement.
+      </p>
+      <p>
+        Prior to this, at <strong>Jet Airways</strong>, I supported aviation security and flight operations administration — conducting anti-sabotage checks, passenger profiling, cargo protection, and regulatory crew logistics — building a strong foundation in both frontline security and back-end coordination.
+      </p>
+      <p>
+        I am driven by a commitment to <strong>safety, operational excellence, and continuous improvement</strong>, and bring a practical governance perspective that is rare among security professionals.
+      </p>
+    </div>
+    <div class="credentials-grid reveal">
+      <div class="cred-card">
+        <div class="cred-icon">🛳️</div>
+        <div class="cred-title">Passport</div>
+        <div class="cred-value">Z7120119</div>
+        <div class="cred-sub">Valid: Dec 2032</div>
+      </div>
+      <div class="cred-card">
+        <div class="cred-icon">⚓</div>
+        <div class="cred-title">Indian CDC</div>
+        <div class="cred-value">MUM 324241</div>
+        <div class="cred-sub">Valid: Aug 2028</div>
+      </div>
+      <div class="cred-card">
+        <div class="cred-icon">🇺🇸</div>
+        <div class="cred-title">US C1/D Visa</div>
+        <div class="cred-value">U4802763</div>
+        <div class="cred-sub">Valid: Nov 2028</div>
+      </div>
+      <div class="cred-card">
+        <div class="cred-icon">🇦🇺</div>
+        <div class="cred-title">AUS Maritime Visa</div>
+        <div class="cred-value">Sub class 988</div>
+        <div class="cred-sub">Valid: Dec 2027</div>
+      </div>
+      <div class="cred-card">
+        <div class="cred-icon">🪪</div>
+        <div class="cred-title">INDOS No.</div>
+        <div class="cred-value">13HL1064</div>
+        <div class="cred-sub">DG Shipping India</div>
+      </div>
+      <div class="cred-card">
+        <div class="cred-icon">💍</div>
+        <div class="cred-title">Marital Status</div>
+        <div class="cred-value">Unmarried</div>
+        <div class="cred-sub">Available globally</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label">Career History</div>
+  <div class="section-title">EXPERIENCE</div>
+  <div class="timeline">
+
+    <!-- RCI Supervisor -->
+    <div class="timeline-item reveal">
+      <div class="timeline-dot"></div>
+      <div class="timeline-company">Royal Caribbean International</div>
+      <div class="timeline-role">Security Supervisor</div>
+      <div class="timeline-period">JAN 2017 – FEB 2025 · 8 YEARS</div>
+      <ul class="timeline-duties">
+        <li>Supervised gangway screening and maintained access control to the ship during port and tender operations across vessels with capacity of 3,200 to 8,500 passengers and crew.</li>
+        <li>Supervised teams ranging from <strong>10 to 40 personnel</strong>, providing daily direction, coaching, and performance oversight.</li>
+        <li>Investigated security incidents, conducted interviews, and submitted detailed reports via GSIMS incident management system.</li>
+        <li>Ensured full compliance with <strong>ISPS Code, CVSSA</strong>, and company SQM standards across all operational areas.</li>
+        <li>Performed routine functional checks of ACPs, X-ray, Archway, HHMD, CCTV, Body Cameras, and Sabre ETD screening equipment.</li>
+        <li>Conducted fire patrols, identified hazards, and ensured compliance with safety standards.</li>
+        <li>Managed master key control operations and assisted with quarterly master key census.</li>
+        <li>Conducted <strong>threat and vulnerability assessments</strong> and coordinated closely with port authorities and local law enforcement agencies.</li>
+        <li>Trained and coached security team members; assisted senior management during safety and security drills and emergency preparedness exercises.</li>
+      </ul>
+
+      <div class="role-divider"></div>
+
+      <div class="sub-role">
+        <div class="timeline-role" style="font-size:19px;">Security Staff</div>
+        <div class="timeline-period">SEP 2014 – JAN 2017 · 2.5 YEARS</div>
+        <ul class="timeline-duties">
+          <li>Maintained access control to the ship during port and tender operations.</li>
+          <li>Conducted fire patrols, identified hazards, and ensured compliance with safety standards.</li>
+          <li>Carried out maintenance of security equipment as instructed by Security Supervisor / Deputy Chief Security Officer.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Jet Airways Flight Ops -->
+    <div class="timeline-item reveal">
+      <div class="timeline-dot gold"></div>
+      <div class="timeline-company gold-co">Jet Airways (India) Ltd.</div>
+      <div class="timeline-role">Senior Administration Assistant – Flight Operations</div>
+      <div class="timeline-period">NOV 2013 – DEC 2014 · 1 YEAR</div>
+      <ul class="timeline-duties gold-bullets">
+        <li>Prepared travel rosters and carried out flight bookings for cockpit and cabin crew, ensuring compliance with ILO regulations.</li>
+        <li>Generated and maintained eACM (Additional Crew Members) reports for daily operational use.</li>
+        <li>Coordinated with line training, sim training, check-in staff, cockpit and cabin crew for any emergency changes.</li>
+      </ul>
+
+      <div class="role-divider"></div>
+
+      <div class="sub-role">
+        <div class="timeline-role" style="font-size:19px;">Security Assistant – Aviation Security</div>
+        <div class="timeline-period">DEC 2010 – NOV 2013 · 3 YEARS</div>
+        <ul class="timeline-duties gold-bullets">
+          <li>Conducted pre-flight and post-flight checks, anti-sabotage and anti-hijack screening, and passenger profiling.</li>
+          <li>Performed X-ray screening of baggage and cargo; monitored sensitive operational areas.</li>
+          <li>Managed valuable/vulnerable cargo handling and guarded aircraft on the ground.</li>
+          <li>Supported security operations for <strong>Jet Airways, Jet Lite, Cathay Pacific, Austrian Airlines, ACG, and Lufthansa</strong>.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">Capabilities</div>
+  <div class="section-title">SKILLS & EXPERTISE</div>
+  <div class="skills-layout">
+
+    <div class="skill-category reveal">
+      <div class="skill-cat-title">🛡 Security Operations</div>
+      <span class="skill-tag">Access Control</span>
+      <span class="skill-tag">Perimeter Security</span>
+      <span class="skill-tag">Gangway Screening</span>
+      <span class="skill-tag">Incident Investigation</span>
+      <span class="skill-tag">Incident Reporting</span>
+      <span class="skill-tag">Threat Assessment</span>
+      <span class="skill-tag">Vulnerability Analysis</span>
+      <span class="skill-tag">Crisis Response</span>
+      <span class="skill-tag">Emergency Preparedness</span>
+    </div>
+
+    <div class="skill-category reveal">
+      <div class="skill-cat-title">📡 Technology & Systems</div>
+      <span class="skill-tag">X-Ray Screening</span>
+      <span class="skill-tag">Sabre ETD</span>
+      <span class="skill-tag">HHMD</span>
+      <span class="skill-tag">CCTV Monitoring</span>
+      <span class="skill-tag">Archway Metal Detectors</span>
+      <span class="skill-tag">Body Cameras</span>
+      <span class="skill-tag">GSIMS</span>
+      <span class="skill-tag">Master Key Control</span>
+      <span class="skill-tag">ACP Management</span>
+    </div>
+
+    <div class="skill-category reveal">
+      <div class="skill-cat-title">📋 Compliance & Regulation</div>
+      <span class="skill-tag gold-tag">ISPS Code</span>
+      <span class="skill-tag gold-tag">CVSSA Standards</span>
+      <span class="skill-tag gold-tag">STCW</span>
+      <span class="skill-tag gold-tag">PFSO Practices</span>
+      <span class="skill-tag gold-tag">SSO Practices</span>
+      <span class="skill-tag gold-tag">GDPR Compliance</span>
+      <span class="skill-tag gold-tag">ILO Regulations</span>
+      <span class="skill-tag gold-tag">SQM Standards</span>
+    </div>
+
+    <div class="skill-category reveal">
+      <div class="skill-cat-title">✈️ Aviation Security</div>
+      <span class="skill-tag">Anti-Sabotage Checks</span>
+      <span class="skill-tag">Anti-Hijack Screening</span>
+      <span class="skill-tag">Passenger Profiling</span>
+      <span class="skill-tag">Baggage Screening</span>
+      <span class="skill-tag">Cargo Protection</span>
+      <span class="skill-tag">Aircraft Guarding</span>
+      <span class="skill-tag">Post-Flight Checks</span>
+    </div>
+
+    <div class="skill-category reveal">
+      <div class="skill-cat-title">👥 Leadership & People</div>
+      <span class="skill-tag">Team Supervision (40+)</span>
+      <span class="skill-tag">Training & Coaching</span>
+      <span class="skill-tag">Cross-Cultural Leadership</span>
+      <span class="skill-tag">Crowd Control</span>
+      <span class="skill-tag">Conflict Management</span>
+      <span class="skill-tag">Performance Management</span>
+    </div>
+
+    <div class="skill-category reveal">
+      <div class="skill-cat-title">🤝 Stakeholder & Ops</div>
+      <span class="skill-tag">Port Authority Liaison</span>
+      <span class="skill-tag">Law Enforcement Coordination</span>
+      <span class="skill-tag">Customs Coordination</span>
+      <span class="skill-tag">Crew Logistics</span>
+      <span class="skill-tag">Risk Management</span>
+      <span class="skill-tag">Customer Relations</span>
+    </div>
+
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="section-label">Qualifications</div>
+  <div class="section-title">CERTIFICATIONS</div>
+  <div class="certs-grid">
+
+    <div class="cert-card reveal">
+      <div class="cert-badge">⚔️</div>
+      <div>
+        <div class="cert-name">Conflict Management</div>
+        <div class="cert-issuer">Royal Caribbean International</div>
+        <div class="cert-year">2024</div>
+      </div>
+    </div>
+
+    <div class="cert-card reveal">
+      <div class="cert-badge">👥</div>
+      <div>
+        <div class="cert-name">Crowd Management (STCW)</div>
+        <div class="cert-issuer">Royal Caribbean International</div>
+        <div class="cert-year">2024</div>
+      </div>
+    </div>
+
+    <div class="cert-card reveal">
+      <div class="cert-badge">🎓</div>
+      <div>
+        <div class="cert-name">Train the Trainer</div>
+        <div class="cert-issuer">Royal Caribbean International</div>
+        <div class="cert-year">2023</div>
+      </div>
+    </div>
+
+    <div class="cert-card reveal">
+      <div class="cert-badge">🚢</div>
+      <div>
+        <div class="cert-name">STCW Certification</div>
+        <div class="cert-issuer">DG Shipping of India</div>
+        <div class="cert-year">2023</div>
+      </div>
+    </div>
+
+    <div class="cert-card reveal">
+      <div class="cert-badge">🏆</div>
+      <div>
+        <div class="cert-name">ALPS Leadership Training</div>
+        <div class="cert-issuer">Royal Caribbean International</div>
+        <div class="cert-year">2019</div>
+      </div>
+    </div>
+
+    <div class="cert-card reveal">
+      <div class="cert-badge">🛡️</div>
+      <div>
+        <div class="cert-name">STSDSD Certification</div>
+        <div class="cert-issuer">DG Shipping of India</div>
+        <div class="cert-year">2019</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-label">Academic Background</div>
+  <div class="section-title">EDUCATION</div>
+  <div class="edu-card reveal">
+    <div class="edu-icon">🎓</div>
+    <div>
+      <div class="edu-degree">Post Graduate Diploma in International Business (DLP)</div>
+      <div class="edu-institute">Welingkar's Institute of Management, Mumbai</div>
+      <div class="edu-period">JUNE 2011 – MAY 2013</div>
+    </div>
+  </div>
+
+  <div class="section-label" style="margin-top:60px;">Communication</div>
+  <div class="section-title" style="font-size:42px; margin-bottom:0;">LANGUAGES</div>
+  <div class="lang-grid">
+    <div class="lang-card reveal">
+      <div class="lang-name">ENGLISH</div>
+      <div class="lang-level">Full Working Proficiency</div>
+      <div class="lang-bar"><div class="lang-fill" style="width:95%"></div></div>
+    </div>
+    <div class="lang-card reveal">
+      <div class="lang-name">HINDI</div>
+      <div class="lang-level">Limited Working Proficiency</div>
+      <div class="lang-bar"><div class="lang-fill" style="width:60%"></div></div>
+    </div>
+    <div class="lang-card reveal">
+      <div class="lang-name">MARATHI</div>
+      <div class="lang-level">Limited Working Proficiency</div>
+      <div class="lang-bar"><div class="lang-fill" style="width:60%"></div></div>
+    </div>
+    <div class="lang-card reveal">
+      <div class="lang-name">GERMAN</div>
+      <div class="lang-level">Elementary Proficiency</div>
+      <div class="lang-bar"><div class="lang-fill" style="width:25%"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- DOCUMENTS -->
+<section id="documents">
+  <div class="section-label">Travel & Maritime Documents</div>
+  <div class="section-title">CREDENTIALS</div>
+  <div class="docs-grid">
+    <div class="doc-card reveal">
+      <div class="doc-icon">🛂</div>
+      <div class="doc-title">Passport</div>
+      <div class="doc-id">Z7120119</div>
+      <div class="doc-valid">✓ Valid until 08 Dec 2032</div>
+    </div>
+    <div class="doc-card reveal">
+      <div class="doc-icon">⚓</div>
+      <div class="doc-title">Indian CDC</div>
+      <div class="doc-id">MUM 324241</div>
+      <div class="doc-valid">✓ Valid until 07 Aug 2028</div>
+    </div>
+    <div class="doc-card reveal">
+      <div class="doc-icon">🪪</div>
+      <div class="doc-title">INDOS Number</div>
+      <div class="doc-id">13HL1064</div>
+      <div class="doc-valid">✓ DG Shipping India</div>
+    </div>
+    <div class="doc-card reveal">
+      <div class="doc-icon">🇺🇸</div>
+      <div class="doc-title">US C1/D Visa</div>
+      <div class="doc-id">U4802763</div>
+      <div class="doc-valid">✓ Valid until 13 Nov 2028</div>
+    </div>
+    <div class="doc-card reveal">
+      <div class="doc-icon">🇦🇺</div>
+      <div class="doc-title">AUS Maritime Crew Visa</div>
+      <div class="doc-id">Sub class 988 · 2009513695946</div>
+      <div class="doc-valid">✓ Valid until 18 Dec 2027</div>
+    </div>
+  </div>
+</section>
+
+<!-- COVER LETTER -->
+<section id="cover">
+  <div class="section-label">Application Letter</div>
+  <div class="section-title">COVER LETTER</div>
+  <div class="letter-card reveal">
+    <div class="letter-greeting">Dear Hiring Manager,</div>
+    <div class="letter-body">
+      <p>I am writing to express my interest in a <strong>Security Operations position</strong> within your esteemed organization. With over <strong>14 years of specialized experience</strong> across the maritime and aviation industries, I bring comprehensive expertise in security management, regulatory compliance, and operational risk control in highly regulated environments.</p>
+
+      <p>During my tenure with <strong>Royal Caribbean International</strong>, I served as a Security Supervisor overseeing gangway screening operations, access control, incident investigations, and emergency preparedness across vessels carrying between 2,600 and 8,500 passengers and crew. I supervised teams ranging from <strong>10 to 40 personnel</strong>, ensured compliance with ISPS Code and CVSSA standards, conducted threat and vulnerability assessments, and coordinated closely with port authorities and local law enforcement agencies. My role required precision, leadership, and the ability to respond effectively to dynamic security situations while maintaining exceptional guest service standards.</p>
+
+      <p>Prior to this, at <strong>Jet Airways</strong>, I supported aviation security operations including anti-sabotage checks, passenger and baggage screening, aircraft guarding, and cargo protection. I also gained operational exposure in flight operations administration, managing crew logistics and ensuring regulatory compliance. This dual exposure has given me a strong understanding of both <strong>frontline security operations</strong> and <strong>back-end coordination</strong> within complex transport environments.</p>
+
+      <p>My core strengths include risk assessment, incident investigation, crisis response planning, security screening systems management (<strong>X-ray, ETD, HHMD, CCTV</strong>), master key control, and stakeholder coordination. I am certified in Conflict Management, Crowd Management (STCW), Train the Trainer, and hold current maritime credentials including valid CDC, INDOS, and international visas.</p>
+
+      <p>I am particularly motivated to contribute my <strong>operational governance perspective</strong>, hands-on leadership approach, and deep compliance knowledge to an organization that values safety, efficiency, and continuous improvement. I am confident that my background in managing security operations in multinational, high-pressure environments makes me a strong asset to your team.</p>
+
+      <p>I welcome the opportunity to further discuss how my experience and skills can contribute to your organization's security objectives. Thank you for your time and consideration.</p>
+    </div>
+    <div class="letter-sign">
+      <div class="letter-sign-name">VISHAL KHAMBE</div>
+      <div class="letter-sign-contact">📱 +91 9869390840 &nbsp;|&nbsp; ✉️ vincy0808@gmail.com</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-name">VISHAL KHAMBE</div>
+    <div class="footer-tagline">Security Operations · Maritime & Aviation · Mumbai, India</div>
+  </div>
+  <div class="footer-right">
+    📱 +91 9869390840<br>
+    ✉️ vincy0808@gmail.com<br>
+    14 Years · ISPS · STCW · CVSSA
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
